@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: tasmotadevicecontroller
-Version: 0.0.1
+Version: 0.0.2
 Summary: Control Tasmota devices via their web api
 Home-page: https://github.com/chaptergy/tasmota-device-controller
 Author: chaptergy
@@ -14,9 +14,9 @@ Description: #  Tasmota Device Controller
         Example usage:
         
         ```py
-        from tasmota_device_controller import TasmotaDevice
-        from tasmota_device_controller import tasmota_commands as cmd
-        from tasmota_device_controller import tasmota_types as t
+        from tasmotadevicecontroller import TasmotaDevice
+        from tasmotadevicecontroller import tasmota_commands as cmd
+        from tasmotadevicecontroller import tasmota_types as t
         
         device = TasmotaDevice('192.168.10.21')
         

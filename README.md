@@ -7,9 +7,9 @@ Only very few requests are implemented so far! If you need other requests, you c
 Example usage:
 
 ```py
-from tasmota_device_controller import TasmotaDevice
-from tasmota_device_controller import tasmota_commands as cmd
-from tasmota_device_controller import tasmota_types as t
+from tasmotadevicecontroller import TasmotaDevice
+from tasmotadevicecontroller import tasmota_commands as cmd
+from tasmotadevicecontroller import tasmota_types as t
 
 device = TasmotaDevice('192.168.10.21')
 
