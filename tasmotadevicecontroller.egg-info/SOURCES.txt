@@ -1,0 +1,9 @@
+README.md
+setup.py
+tasmotadevicecontroller/__init__.py
+tasmotadevicecontroller/tasmota_commands.py
+tasmotadevicecontroller/tasmota_types.py
+tasmotadevicecontroller.egg-info/PKG-INFO
+tasmotadevicecontroller.egg-info/SOURCES.txt
+tasmotadevicecontroller.egg-info/dependency_links.txt
+tasmotadevicecontroller.egg-info/top_level.txt

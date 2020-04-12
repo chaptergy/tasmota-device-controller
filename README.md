@@ -2,6 +2,8 @@
 
 This packag provides wrappers for Tasmota's web request API.
 
+Only very few requests are implemented so far! If you need other requests, you can implement these commands and create a merge request on [GitHub](https://github.com/chaptergy/tasmota-device-controller), or create an issue.
+
 Example usage:
 
 ```py
