@@ -8,7 +8,6 @@ class PowerType(Enum):
     BLINK = '3'
     BLINK_OFF = '4'
 
-
 class PowerOutputType(Enum):
     ALL_OUTPUTS = '0'
     OUTPUT_1 = '1'
@@ -20,6 +19,16 @@ class PowerOutputType(Enum):
     OUTPUT_7 = '7'
     OUTPUT_8 = '8'
 
+class FriendlyNameOutputType(Enum):
+    ALL_OUTPUTS = ''
+    OUTPUT_1 = '1'
+    OUTPUT_2 = '2'
+    OUTPUT_3 = '3'
+    OUTPUT_4 = '4'
+    OUTPUT_5 = '5'
+    OUTPUT_6 = '6'
+    OUTPUT_7 = '7'
+    OUTPUT_8 = '8'
 
 class StatusType(Enum):
     ABBREVIATED = ''
