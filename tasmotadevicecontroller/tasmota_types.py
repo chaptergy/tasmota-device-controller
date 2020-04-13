@@ -20,7 +20,6 @@ class PowerOutputType(Enum):
     OUTPUT_8 = '8'
 
 class FriendlyNameOutputType(Enum):
-    ALL_OUTPUTS = ''
     OUTPUT_1 = '1'
     OUTPUT_2 = '2'
     OUTPUT_3 = '3'
