@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: tasmotadevicecontroller
-Version: 0.0.5
+Version: 0.0.6
 Summary: Control Tasmota devices via their web api
 Home-page: https://github.com/chaptergy/tasmota-device-controller
 Author: chaptergy

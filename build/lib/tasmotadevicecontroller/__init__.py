@@ -109,7 +109,6 @@ class TasmotaDevice():
         output = output.value
 
         response = await self.sendRawRequest(f'Power{output}')
-        print(response)
         if response.get('POWER') != 'ON' and response.get('POWER') != 'OFF': raise Exception(f'Command failed: {response}')
         return response.get('POWER') == 'ON'
 
@@ -138,10 +137,21 @@ class TasmotaDevice():
 
         response = await self.sendRawRequest(f'Power{output} {parsedValue}')
         if response.get('POWER') is None: raise Exception(f'Command failed: {response}')
-        if value is t.PowerType.ON:
+        if value is t.PowerType.OFF:
+            if response.get('POWER') != 'OFF': raise Exception(f'Command failed: {response}')
+            return False
+        elif value is t.PowerType.ON:
+            if response.get('POWER') != 'ON': raise Exception(f'Command failed: {response}')
+            return True
+        elif value is t.PowerType.TOGGLE:
+            if response.get('POWER') != 'ON' and response.get('POWER') != 'OFF': raise Exception(f'Command failed: {response}')
             return response.get('POWER') == 'ON'
-        elif value is t.PowerType.BLINK or value is t.PowerType.BLINK_OFF:
-            return (response.get('POWER') == 'Blink ON') or (response.get('POWER') == 'Blink OFF')
+        elif value is t.PowerType.BLINK:
+            if response.get('POWER') != 'Blink ON': raise Exception(f'Command failed: {response}')
+            return True
+        elif value is t.PowerType.BLINK_OFF:
+            if response.get('POWER') != 'Blink OFF': raise Exception(f'Command failed: {response}')
+            return True
 
     ######   Management   ######
 

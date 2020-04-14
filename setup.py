@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tasmotadevicecontroller",
-    version="0.0.5",
+    version="0.0.6",
     author="chaptergy",
     description="Control Tasmota devices via their web api",
     long_description=long_description,
