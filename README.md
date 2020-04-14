@@ -4,7 +4,7 @@ This packag provides async wrappers for Tasmota's web request API.
 
 Only very few requests are implemented so far! If you need other requests, please have a look at the section [Contributing](#contributing), or create an issue.
 
-`set` methods return a `boolean` whether the request succeeded, `get` methods return the value of the fetched item.
+`get` methods return the value of the fetched item, `set` methods return the new set value (so what the `get` method would return after the set). However there are some exceptions like `BLINK` for `setPower()` which always returns `True`, but that should be mentioned in the methods description.
 
 Since this package was created for a Home Assistant integration, you can check out [that integration](https://github.com/chaptergy/homeassistant-tasmota-switch) for other sample usage.
 
@@ -28,7 +28,7 @@ async def main():
 
     # Set power of first output to on
     setResult = await device.setPower(t.PowerType.TOGGLE)
-    print(setResult)  # Returns True (command succeeded)
+    print(setResult)  # Returns True or False (depending if the device was switched on or off)
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())

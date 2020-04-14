@@ -64,7 +64,7 @@ class TasmotaDevice():
         if response.get('BlinkCount') is None: raise Exception(f'Command failed: {response}')
         return response.get('BlinkCount')
 
-    async def setBlinkCount(self, value: int) -> bool:
+    async def setBlinkCount(self, value: int) -> int:
         """Set the blink count (number of power toggles).
 
         0 = blink many times before restoring power state
@@ -76,8 +76,8 @@ class TasmotaDevice():
             raise ValueError('Value must be between 0 and 32000')
 
         response = await self.sendRawRequest(f'BlinkCount {value}')
-        if response.get('BlinkCount') is None: raise Exception(f'Command failed: {response}')
-        return response.get('BlinkCount') == value
+        if response.get('BlinkCount') != value: raise Exception(f'Command failed: {response}')
+        return value
 
 
     async def getBlinkTime(self) -> int:
@@ -86,7 +86,7 @@ class TasmotaDevice():
         if response.get('BlinkTime') is None: raise Exception(f'Command failed: {response}')
         return response.get('BlinkTime')
 
-    async def setBlinkTime(self, value: int) -> bool:
+    async def setBlinkTime(self, value: int) -> int:
         """Set the blink time (duration of power toggles).
 
         2..3600 = set duration of blinks in 0.1s increments (10 = 1s)
@@ -97,8 +97,8 @@ class TasmotaDevice():
             raise ValueError("Value must be between 2 and 3600")
 
         response = await self.sendRawRequest(f'BlinkTime {value}')
-        if response.get('BlinkTime') is None: raise Exception(f'Command failed: {response}')
-        return response.get('BlinkTime') == value
+        if response.get('BlinkTime') != value: raise Exception(f'Command failed: {response}')
+        return value
 
 
     async def getPower(self, output: t.PowerOutputType = t.PowerOutputType.OUTPUT_1) -> bool:
@@ -110,7 +110,7 @@ class TasmotaDevice():
 
         response = await self.sendRawRequest(f'Power{output}')
         print(response)
-        if response.get('POWER') is None: raise Exception(f'Command failed: {response}')
+        if response.get('POWER') != 'ON' and response.get('POWER') != 'OFF': raise Exception(f'Command failed: {response}')
         return response.get('POWER') == 'ON'
 
     async def setPower(self, value: t.PowerType, output: t.PowerOutputType = t.PowerOutputType.OUTPUT_1) -> bool:
@@ -120,8 +120,8 @@ class TasmotaDevice():
         PowerType.OFF = turn the output off
         PowerType.ON = turn the output on
         PowerType.TOGGLE = if output is ON switch to OFF and vice versa
-        PowerType.BLINK = toggle power for BlinkCount times each BlinkTime duration (only when output is not `ALL_OUTPUTS`) (at the end of blink, power state is returned to pre-blink state; does not control the status LED)
-        PowerType.BLINK_OFF = stop blink sequence and return power state to pre-blink state (only when output is not `ALL_OUTPUTS`)
+        PowerType.BLINK = toggle power for BlinkCount times each BlinkTime duration (only when output is not `ALL_OUTPUTS`; function will always return True) (at the end of blink, power state is returned to pre-blink state; does not control the status LED)
+        PowerType.BLINK_OFF = stop blink sequence and return power state to pre-blink state (only when output is not `ALL_OUTPUTS`; function will always return True)
         """
 
         # Validate input
@@ -140,14 +140,8 @@ class TasmotaDevice():
         if response.get('POWER') is None: raise Exception(f'Command failed: {response}')
         if value is t.PowerType.ON:
             return response.get('POWER') == 'ON'
-        elif value is t.PowerType.OFF:
-            return response.get('POWER') == 'OFF'
-        elif value is t.PowerType.TOGGLE:
-            return (response.get('POWER') == 'ON') or (response.get('POWER') == 'OFF')
-        elif value is t.PowerType.BLINK:
-            return response.get('POWER') == 'Blink ON'
-        elif value is t.PowerType.BLINK_OFF:
-            return response.get('POWER') == 'Blink OFF'
+        elif value is t.PowerType.BLINK or value is t.PowerType.BLINK_OFF:
+            return (response.get('POWER') == 'Blink ON') or (response.get('POWER') == 'Blink OFF')
 
     ######   Management   ######
 
@@ -162,7 +156,7 @@ class TasmotaDevice():
         if response.get(f'FriendlyName{output}') is None: raise Exception(f'Command failed: {response}')
         return response.get(f'FriendlyName{output}')
 
-    async def setFriendlyName(self, value: str, output: t.FriendlyNameOutputType = t.FriendlyNameOutputType.OUTPUT_1) -> bool:
+    async def setFriendlyName(self, value: str, output: t.FriendlyNameOutputType = t.FriendlyNameOutputType.OUTPUT_1) -> str:
         """Set the friendly name of a power output.  
         
         Possible values:
@@ -179,8 +173,8 @@ class TasmotaDevice():
             raise ValueError("Name must be at most 32 characters long")
 
         response = await self.sendRawRequest(f'FriendlyName{output} {value}')
-        if response.get(f'FriendlyName{output}') is None: raise Exception(f'Command failed: {response}')
-        return response.get(f'FriendlyName{output}') == value
+        if response.get(f'FriendlyName{output}') != value: raise Exception(f'Command failed: {response}')
+        return value
 
 
     async def getStatus(self, statusType: t.StatusType = t.StatusType.ABBREVIATED) -> dict:
